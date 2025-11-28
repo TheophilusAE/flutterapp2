@@ -1,6 +1,6 @@
-import 'package:app2/bloc/bloc_increment.dart';
-import 'package:app2/event/event_increment.dart';
-import 'package:app2/state/state_increment.dart';
+import 'package:app2/bloc/calculator_bloc.dart';
+import 'package:app2/event/calculator_event.dart';
+import 'package:app2/state/calculator_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,14 +22,14 @@ class _Pages_incrementState extends State<Pages_increment> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<Bloc_increment, State_increment>(builder: (context, state){
-      if(state is State_increment_initialstate){
-        return _PageIncrement(context, 0, _controller);
-      }else if(state is State_increment_updatestate){
-        return _PageIncrement(context, state.num, _controller);
-      }else{
-        return Container();
+    return BlocBuilder<CalculatorBloc, CalculatorState>(builder: (context, state){
+      int currentValue = 0;
+      if(state is CalculatorInitial){
+        currentValue = state.value;
+      }else if(state is CalculatorUpdated){
+        currentValue = state.value;
       }
+      return _PageIncrement(context, currentValue, _controller);
     });
   }
 }
@@ -125,9 +125,7 @@ Widget _PageIncrement(BuildContext context, int number, TextEditingController co
                 ElevatedButton(
                   onPressed: (){
                     int value = int.tryParse(controller.text) ?? 1;
-                    for(int i = 0; i < value; i++){
-                      context.read<Bloc_increment>().add(EventIncrement_addnum());
-                    }
+                    context.read<CalculatorBloc>().add(AddEvent(value));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,

@@ -1,6 +1,6 @@
-import 'package:app2/bloc/bloc_multiplication.dart';
-import 'package:app2/event/event_multiplication.dart';
-import 'package:app2/state/state_multiplication.dart';
+import 'package:app2/bloc/calculator_bloc.dart';
+import 'package:app2/event/calculator_event.dart';
+import 'package:app2/state/calculator_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,14 +22,14 @@ class _Pages_multiplicationState extends State<Pages_multiplication> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<Bloc_multiplication, State_multiplication>(builder: (context, state){
-      if(state is State_multiplication_initialstate){
-        return _PageMultiplication(context, 1, _controller);
-      }else if(state is State_multiplication_updatestate){
-        return _PageMultiplication(context, state.num, _controller);
-      }else{
-        return Container();
+    return BlocBuilder<CalculatorBloc, CalculatorState>(builder: (context, state){
+      int currentValue = 1;
+      if(state is CalculatorInitial){
+        currentValue = state.value;
+      }else if(state is CalculatorUpdated){
+        currentValue = state.value;
       }
+      return _PageMultiplication(context, currentValue, _controller);
     });
   }
 }
@@ -125,7 +125,7 @@ Widget _PageMultiplication(BuildContext context, int number, TextEditingControll
                 ElevatedButton(
                   onPressed: (){
                     int value = int.tryParse(controller.text) ?? 2;
-                    context.read<Bloc_multiplication>().add(EventMultiplication_mulnum(value));
+                    context.read<CalculatorBloc>().add(MultiplyEvent(value));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,

@@ -1,6 +1,4 @@
-import 'package:app2/bloc/bloc_increment.dart';
-import 'package:app2/bloc/bloc_decrement.dart';
-import 'package:app2/bloc/bloc_multiplication.dart';
+import 'package:app2/bloc/calculator_bloc.dart';
 import 'package:app2/pages/pages_increment.dart';
 import 'package:app2/pages/pages_decrement.dart';
 import 'package:app2/pages/pages_multiplication.dart';
@@ -17,18 +15,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<Bloc_increment>(
-          create: (context) => Bloc_increment(),
-        ),
-        BlocProvider<Bloc_decrement>(
-          create: (context) => Bloc_decrement(),
-        ),
-        BlocProvider<Bloc_multiplication>(
-          create: (context) => Bloc_multiplication(),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => CalculatorBloc(),
       child: MaterialApp(
         title: 'Latihan Flutter',
         theme: ThemeData(

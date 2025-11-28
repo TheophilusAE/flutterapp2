@@ -1,6 +1,6 @@
-import 'package:app2/bloc/bloc_decrement.dart';
-import 'package:app2/event/event_decrement.dart';
-import 'package:app2/state/state_decrement.dart';
+import 'package:app2/bloc/calculator_bloc.dart';
+import 'package:app2/event/calculator_event.dart';
+import 'package:app2/state/calculator_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,14 +22,14 @@ class _Pages_decrementState extends State<Pages_decrement> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<Bloc_decrement, State_decrement>(builder: (context, state){
-      if(state is State_decrement_initialstate){
-        return _PageDecrement(context, 0, _controller);
-      }else if(state is State_decrement_updatestate){
-        return _PageDecrement(context, state.num, _controller);
-      }else{
-        return Container();
+    return BlocBuilder<CalculatorBloc, CalculatorState>(builder: (context, state){
+      int currentValue = 0;
+      if(state is CalculatorInitial){
+        currentValue = state.value;
+      }else if(state is CalculatorUpdated){
+        currentValue = state.value;
       }
+      return _PageDecrement(context, currentValue, _controller);
     });
   }
 }
@@ -125,9 +125,7 @@ Widget _PageDecrement(BuildContext context, int number, TextEditingController co
                 ElevatedButton(
                   onPressed: (){
                     int value = int.tryParse(controller.text) ?? 1;
-                    for(int i = 0; i < value; i++){
-                      context.read<Bloc_decrement>().add(EventDecrement_subnum());
-                    }
+                    context.read<CalculatorBloc>().add(SubtractEvent(value));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.white,
