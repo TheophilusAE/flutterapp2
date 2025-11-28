@@ -1,24 +1,24 @@
-import 'package:app2/bloc/bloc_increment.dart';
-import 'package:app2/event/event_increment.dart';
-import 'package:app2/state/state_increment.dart';
+import 'package:app2/bloc/bloc_decrement.dart';
+import 'package:app2/event/event_decrement.dart';
+import 'package:app2/state/state_decrement.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Pages_increment extends StatefulWidget {
-  const Pages_increment({super.key});
+class Pages_decrement extends StatefulWidget {
+  const Pages_decrement({super.key});
 
   @override
-  State<Pages_increment> createState() => _Pages_incrementState();
+  State<Pages_decrement> createState() => _Pages_decrementState();
 }
 
-class _Pages_incrementState extends State<Pages_increment> {
+class _Pages_decrementState extends State<Pages_decrement> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<Bloc_increment, State_increment>(builder: (context, state){
-      if(state is State_increment_initialstate){
-        return _PageIncrement(context,0);
-      }else if(state is State_increment_updatestate){
-        return _PageIncrement(context, state.num);
+    return BlocBuilder<Bloc_decrement, State_decrement>(builder: (context, state){
+      if(state is State_decrement_initialstate){
+        return _PageDecrement(context,0);
+      }else if(state is State_decrement_updatestate){
+        return _PageDecrement(context, state.num);
       }else{
         return Container();
       }
@@ -26,10 +26,10 @@ class _Pages_incrementState extends State<Pages_increment> {
   }
 }
 
-Widget _PageIncrement(BuildContext context, int number){
+Widget _PageDecrement(BuildContext context, int number){
   return Scaffold(
     appBar: AppBar(
-      title: Text("Increment"),
+      title: Text("Decrement"),
     ),
     body: Center(
       child: Column(
@@ -42,17 +42,17 @@ Widget _PageIncrement(BuildContext context, int number){
           ),
           SizedBox(height: 20),
           ElevatedButton(onPressed: (){
-            context.read<Bloc_increment>().add(EventIncrement_addnum());
-          }, child: Text("Increment")),
+            context.read<Bloc_decrement>().add(EventDecrement_subnum());
+          }, child: Text("Decrement")),
           SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 onPressed: (){
-                  Navigator.pushNamed(context, '/decrement');
+                  Navigator.pushNamed(context, '/');
                 },
-                child: Text("Decrement Page")
+                child: Text("Increment Page")
               ),
               SizedBox(width: 10),
               ElevatedButton(

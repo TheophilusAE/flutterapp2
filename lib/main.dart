@@ -1,5 +1,9 @@
 import 'package:app2/bloc/bloc_increment.dart';
+import 'package:app2/bloc/bloc_decrement.dart';
+import 'package:app2/bloc/bloc_multiplication.dart';
 import 'package:app2/pages/pages_increment.dart';
+import 'package:app2/pages/pages_decrement.dart';
+import 'package:app2/pages/pages_multiplication.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -18,6 +22,12 @@ class MyApp extends StatelessWidget {
         BlocProvider<Bloc_increment>(
           create: (context) => Bloc_increment(),
         ),
+        BlocProvider<Bloc_decrement>(
+          create: (context) => Bloc_decrement(),
+        ),
+        BlocProvider<Bloc_multiplication>(
+          create: (context) => Bloc_multiplication(),
+        ),
       ],
       child: MaterialApp(
         title: 'Latihan Flutter',
@@ -27,6 +37,8 @@ class MyApp extends StatelessWidget {
         initialRoute: '/',
         routes: {
           '/': (context) => Pages_increment(),
+          '/decrement': (context) => Pages_decrement(),
+          '/multiplication': (context) => Pages_multiplication(),
         },
       ),
     );
